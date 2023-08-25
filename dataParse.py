@@ -1,5 +1,3 @@
-## MAKE INTO RESPONSE CLASS
-
 
 class Response:
 
