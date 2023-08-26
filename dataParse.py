@@ -1,7 +1,10 @@
+import json
 
 class Response:
 
-    accelSensitivity = 16384   
+    #TODO: Get json parsing to work
+
+    accelSensitivity = 16384
     gyroSensitivity = 131
 
     def __init__(self,serial_line):
@@ -11,7 +14,17 @@ class Response:
         self.responselist = None
 
         self.parseResponse()
-    
+
+
+    @classmethod
+    def getConfig(cls):
+        with open("config.json") as configfile:
+            config = json.load(configfile)
+            
+        cls.accelSensitivity = config['accelerometerSensitivity']
+        cls.gyroSensitivity = config['gyrometerSensitivity']
+
+
     def parseData(self,dataLine):
 
         dataList = dataLine.split(',')
@@ -83,3 +96,11 @@ class Response:
     def response_handler(self):
 
         return self.routeResponse()
+
+
+
+if __name__ == '__main__':
+
+    testLine = "readings:1,-446,-60,16081,-2,52,-24,22.18,"
+
+    testResponse = Response(testLine)
